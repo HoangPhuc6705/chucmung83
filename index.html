@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>8/3 vui vẻ nè</title>
+  <link rel="icon" href="https://pngimg.com/uploads/heart/heart_PNG51337.png" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Parkinsans:wght@300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #FFF2F2;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      color: white;
+      width: 5vh;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-20vh);
+      }
+
+      100% {
+        transform: translateY(120vh);
+      }
+    }
+
+    .letter {
+      z-index: 10;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+
+
+    .behind_letter {
+      position: absolute;
+      background-color: #1693bd;
+      width: 100%;
+      height: 60%;
+      box-shadow: 0 0 5px 2px #00000038;
+      z-index: 1;
+    }
+
+    /* A1E3F9 */
+
+    .left_letter {
+      position: absolute;
+      background-color: #A1E3F9;
+      clip-path: polygon(0 0, 0% 100%, 100% 100%);
+      width: 100%;
+      height: 60%;
+      z-index: 3;
+    }
+
+    .right_letter {
+      position: absolute;
+      background-color: #cbf2ff;
+      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+      width: 100%;
+      height: 60%;
+      z-index: 4;
+    }
+
+    /* polygon(50% 50%, 0 0, 100% 0) */
+    .center_letter {
+      position: absolute;
+      background-color: #40bae2;
+      clip-path: polygon(50% 50%, 0 0, 100% 0);
+      width: 100%;
+      height: 60%;
+      transform-origin: 50% 0;
+      /* animation: open 1s forwards; */
+      z-index: 5;
+    }
+
+    @keyframes open {
+      from {
+        transform: rotateX(0deg);
+      }
+
+      to {
+        transform: rotateX(180deg);
+        background-color: #1693bd;
+      }
+    }
+
+    @keyframes close {
+      from {
+        transform: rotateX(180deg);
+        background-color: #1693bd;
+      }
+
+      to {
+        transform: rotateX(0);
+        background-color: #40bae2;
+      }
+    }
+
+
+    .paper {
+      position: absolute;
+      width: 90%;
+      height: 50%;
+      background: #fff;
+      left: 50%;
+      transform: translate(-50%, 10%);
+      z-index: 2;
+      border-radius: 10px;
+      padding: 30px;
+      color: #f8573f;
+      font-family: "Pacifico", cursive;
+      font-size: 1rem;
+    }
+
+
+    @keyframes up {
+      from {
+        transform: translate(-50%, 10%);
+      }
+
+      to {
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes down {
+      from {
+        transform: translate(-50%, -50%);
+      }
+
+      to {
+        transform: translate(-50%, 10%);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="letter">
+    <div class="behind_letter"></div>
+    <div class="center_letter">
+    </div>
+    <div class="paper">
+      Chúc bạn ngày 8/3 vui vẻ, ngập tràn niềm vui và hạnh phúc. Chúc bạn luôn xinh đẹp tuyệt vời
+    </div>
+    <div class="left_letter"></div>
+    <div class="right_letter"></div>
+  </div>
+
+  <script>
+    const centerLetter = document.querySelector('.center_letter');
+    const letter = document.querySelector('.letter');
+    const paper = document.querySelector('.paper');
+    let isOpen = false; // thu dang dong
+    function handleOpenLetter() {
+      if (!isOpen) {
+        centerLetter.style.animation = `open 1s forwards`;
+        paper.style.animation = `up 1s forwards 1s`
+        setTimeout(() => {
+          centerLetter.style.zIndex = 1;
+        }, 1000);
+        isOpen = !isOpen;
+        return;
+      }
+      paper.style.animation = `down 1s forwards`
+      centerLetter.style.animation = `close 1s backwards 1s`;
+      setTimeout(() => {
+        paper.style.zIndex = 2;
+        centerLetter.style.zIndex = 5;
+      }, 1000)
+      isOpen = !isOpen;
+
+    }
+    letter.addEventListener('click', handleOpenLetter)
+
+    function createSnowflake() {
+      const snowflake = document.createElement('img');
+      snowflake.className = 'snowflake';
+      snowflake.src = 'https://pngimg.com/uploads/heart/heart_PNG51337.png'; // Ký hiệu bông tuyết Unicode
+
+      // Vị trí ngẫu nhiên trên trục X
+      snowflake.style.left = Math.random() * 90 + 'vw';
+
+      // Thời gian rơi ngẫu nhiên từ 5-10 giây
+      const animationDuration = Math.random() * 5 + 5;
+      snowflake.style.animation = `fall ${animationDuration}s linear`;
+
+      // Xóa bông tuyết sau khi rơi xong
+      snowflake.addEventListener('animationend', () => {
+        snowflake.remove();
+      });
+
+      document.body.appendChild(snowflake);
+
+      // console.log(document.querySelectorAll('.snowflake').length)
+    }
+
+    // Tạo bông tuyết mới mỗi 100ms
+    setInterval(createSnowflake, 200);
+
+  </script>
+</body>
+
+</html>
